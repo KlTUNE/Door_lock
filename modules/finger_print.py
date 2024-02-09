@@ -1,5 +1,5 @@
 from pyfingerprint.pyfingerprint import PyFingerprint
-import time, hashlib
+import time
 
 # 指紋センサーのセットアップ&初期化
 try:
@@ -77,8 +77,8 @@ def enroll():
             exit(0)
 
         print('指を離してください...')
-        # while ( f.readImage() == True ): pass
-        time.sleep(2)
+        while ( f.readImage() == True ): pass
+        # time.sleep(2)
 
         print('もう一度指をセンサーにかざしてください...')
         while ( f.readImage() == False ): pass
@@ -99,7 +99,18 @@ def enroll():
         print(f'エラー : {e}')
         return False
 
+def _led_on():
+    f.led_on()
+def _led_off():
+    f.led_off()
+
 if __name__ == "__main__":
+    for i in range(10):
+        _led_off()
+        time.sleep(0.5)
+        _led_on()
+        time.sleep(0.5)
+
     # search()
     # index()
     # delete()
