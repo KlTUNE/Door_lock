@@ -12,7 +12,7 @@ except Exception as e:
     print(f'指紋センサーを初期化できませんでした : {e}')
     exit(1)
 
-# 指紋を検索
+### 指紋を検索
 def search():
     try:
         print('指をセンサーにかざしてください...')
@@ -37,7 +37,7 @@ def search():
         print(f'エラー : {e}')
         exit(1)
 
-# 登録済みのindexを表示
+### 登録済みのindexを表示
 def index():
     try:
         tableIndex = f.getTemplateIndex(0)
@@ -48,17 +48,17 @@ def index():
         print(f'エラー : {e}')
         exit(1)
 
-# 指紋を削除
+### 指紋を削除
 def delete():
     pass
 
-# 指紋を登録
+### 指紋を登録
 def enroll():
     pass
 
 if __name__ == "__main__":
-    # search()
-    index()
+    search()
+    # index()
     # delete()
     # enroll()
     pass
