@@ -101,8 +101,10 @@ def enroll():
 
 def _led_on():
     f.led_on()
+    print('LED ON')
 def _led_off():
     f.led_off()
+    print('LED OFF')
 
 if __name__ == "__main__":
     for i in range(10):
