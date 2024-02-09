@@ -96,7 +96,9 @@ def enroll():
         return True
 
     except Exception as e:
-        print(f'エラー : {e}')
+        # print(f'エラー : {e}')
+        import traceback
+        traceback.print_exc()
         return False
 
 def test():
