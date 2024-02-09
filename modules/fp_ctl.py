@@ -124,6 +124,6 @@ if __name__ == "__main__":
     # search()
     # index()
     # delete()
-    # enroll()
-    test()
+    enroll()
+    # test()
     pass

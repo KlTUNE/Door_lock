@@ -277,7 +277,6 @@ class PyFingerprint(object):
         ## Write checksum (2 bytes)
         self.__serial.write(self.__byteToString(self.__rightShift(packetChecksum, 8)))
         self.__serial.write(self.__byteToString(self.__rightShift(packetChecksum, 0)))
-        print(f"せんど({packetType}, {self.__address}, {packetPayload})")
 
     def __readPacket(self):
         """
@@ -1403,13 +1402,62 @@ class PyFingerprint(object):
         packetPayload = (
             FINGERPRINT_CLOSELED,
         )
-        self.__writePacket(FINGERPRINT_COMMANDPACKET, packetPayload)
+        ## Write header (one byte at once)
+        self.__serial.write(self.__byteToString(self.__rightShift(FINGERPRINT_STARTCODE, 8)))
+        self.__serial.write(self.__byteToString(self.__rightShift(FINGERPRINT_STARTCODE, 0)))
+
+        self.__serial.write(self.__byteToString(self.__rightShift(self.__address, 24)))
+        self.__serial.write(self.__byteToString(self.__rightShift(self.__address, 16)))
+        self.__serial.write(self.__byteToString(self.__rightShift(self.__address, 8)))
+        self.__serial.write(self.__byteToString(self.__rightShift(self.__address, 0)))
+
+        self.__serial.write(self.__byteToString(FINGERPRINT_COMMANDPACKET))
+
+        ## The packet length = package payload (n bytes) + checksum (2 bytes)
+        packetLength = 0x0003
+
+        self.__serial.write(self.__byteToString(self.__rightShift(packetLength, 8)))
+        self.__serial.write(self.__byteToString(self.__rightShift(packetLength, 0)))
+
+        ## Write payload
+        for i in range(0, len(packetPayload)):
+            self.__serial.write(self.__byteToString(packetPayload[i]))
+
+        ## Write checksum (2 bytes)
+        packetChecksum = 0x54
+        self.__serial.write(self.__byteToString(self.__rightShift(packetChecksum, 8)))
+        self.__serial.write(self.__byteToString(self.__rightShift(packetChecksum, 0)))
+
         receivedPacket = self.__readPacket()
-        print("LED OFF")
 
     def led_on(self):
         packetPayload = (
             FINGERPRINT_OPENLED,
         )
-        self.__writePacket(FINGERPRINT_COMMANDPACKET, packetPayload)
+        ## Write header (one byte at once)
+        self.__serial.write(self.__byteToString(self.__rightShift(FINGERPRINT_STARTCODE, 8)))
+        self.__serial.write(self.__byteToString(self.__rightShift(FINGERPRINT_STARTCODE, 0)))
+
+        self.__serial.write(self.__byteToString(self.__rightShift(self.__address, 24)))
+        self.__serial.write(self.__byteToString(self.__rightShift(self.__address, 16)))
+        self.__serial.write(self.__byteToString(self.__rightShift(self.__address, 8)))
+        self.__serial.write(self.__byteToString(self.__rightShift(self.__address, 0)))
+
+        self.__serial.write(self.__byteToString(FINGERPRINT_COMMANDPACKET))
+
+        ## The packet length = package payload (n bytes) + checksum (2 bytes)
+        packetLength = 0x0003
+
+        self.__serial.write(self.__byteToString(self.__rightShift(packetLength, 8)))
+        self.__serial.write(self.__byteToString(self.__rightShift(packetLength, 0)))
+
+        ## Write payload
+        for i in range(0, len(packetPayload)):
+            self.__serial.write(self.__byteToString(packetPayload[i]))
+
+        ## Write checksum (2 bytes)
+        packetChecksum = 0x55
+        self.__serial.write(self.__byteToString(self.__rightShift(packetChecksum, 8)))
+        self.__serial.write(self.__byteToString(self.__rightShift(packetChecksum, 0)))
+
         receivedPacket = self.__readPacket()
