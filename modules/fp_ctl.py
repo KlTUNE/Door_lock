@@ -101,13 +101,6 @@ def enroll():
         traceback.print_exc()
         return False
 
-def test():
-    while True:
-        if ( f.readImage()):
-            print("true")
-        else:
-            print("false")
-
 def _led_on():
     f.led_on()
     print('LED ON')
