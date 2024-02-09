@@ -78,9 +78,8 @@ def enroll():
             exit(0)
 
         print('指を離してください...')
-        while ( f.readImage() == True ): pass
-        # time.sleep(2)
-
+        # while ( f.readImage() == True ): pass
+        time.sleep(2)
         print('もう一度指をセンサーにかざしてください...')
         while ( f.readImage() == False ): pass
 
@@ -115,14 +114,14 @@ def _led_off():
     print('LED OFF')
 
 if __name__ == "__main__":
-    for i in range(5):
-        _led_off()
-        time.sleep(1)
-        _led_on()
-        time.sleep(1)
+    # for i in range(5):
+    #     _led_off()
+    #     time.sleep(1)
+    #     _led_on()
+    #     time.sleep(1)
 
     # search()
-    index()
+    # index()
     # delete()
     enroll()
     # test()
