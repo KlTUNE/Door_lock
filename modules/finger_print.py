@@ -102,6 +102,6 @@ def enroll():
 if __name__ == "__main__":
     # search()
     # index()
-    delete()
-    # enroll()
+    # delete()
+    enroll()
     pass
