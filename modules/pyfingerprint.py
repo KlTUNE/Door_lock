@@ -277,6 +277,7 @@ class PyFingerprint(object):
         ## Write checksum (2 bytes)
         self.__serial.write(self.__byteToString(self.__rightShift(packetChecksum, 8)))
         self.__serial.write(self.__byteToString(self.__rightShift(packetChecksum, 0)))
+        print(f"せんど({packetType}, {self.__address}, {packetPayload})")
 
     def __readPacket(self):
         """
@@ -1404,6 +1405,7 @@ class PyFingerprint(object):
         )
         self.__writePacket(FINGERPRINT_COMMANDPACKET, packetPayload)
         receivedPacket = self.__readPacket()
+        print("LED OFF")
 
     def led_on(self):
         packetPayload = (

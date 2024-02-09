@@ -100,6 +100,13 @@ def enroll():
         print(f'エラー : {e}')
         return False
 
+def test():
+    while True:
+        if ( f.readImage()):
+            print("true")
+        else:
+            print("false")
+
 def _led_on():
     f.led_on()
     print('LED ON')
@@ -108,14 +115,15 @@ def _led_off():
     print('LED OFF')
 
 if __name__ == "__main__":
-    for i in range(10):
+    for i in range(5):
         _led_off()
-        time.sleep(2)
+        time.sleep(1)
         _led_on()
-        time.sleep(2)
+        time.sleep(1)
 
     # search()
     # index()
     # delete()
-    enroll()
+    # enroll()
+    test()
     pass
