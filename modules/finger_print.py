@@ -107,9 +107,9 @@ def _led_off():
 if __name__ == "__main__":
     for i in range(10):
         _led_off()
-        time.sleep(0.5)
+        time.sleep(2)
         _led_on()
-        time.sleep(0.5)
+        time.sleep(2)
 
     # search()
     # index()
