@@ -14,14 +14,35 @@ except Exception as e:
 
 # 指紋を検索
 def search():
-    pass
+    try:
+        print('指をセンサーにかざしてください...')
+        while ( f.readImage() == False ): pass
+
+        # 読み取った画像を特性に変換し、文字バッファ1に格納
+        f.convertImage(0x01)
+        # 検索
+        result = f.searchTemplate()
+        # Index番号と一致度を取得
+        positionNumber = result[0]
+        accuracyScore = result[1]
+
+        if ( positionNumber == -1 ):
+            print('不一致')
+            exit(0)
+        else:
+            print('一致 Index番号#' + str(positionNumber))
+            print('一致度: ' + str(accuracyScore))
+
+    except Exception as e:
+        print(f'エラー : {e}')
+        exit(1)
 
 # 登録済みのindexを表示
 def index():
     try:
         tableIndex = f.getTemplateIndex(0)
         for i in range(0, len(tableIndex)):
-            print('TemplateIndex #' + str(i) + ' is used: ' + str(tableIndex[i]))
+            print('#' + str(i) + ' is used: ' + str(tableIndex[i]))
 
     except Exception as e:
         print(f'エラー : {e}')
