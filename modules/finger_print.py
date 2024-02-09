@@ -18,7 +18,7 @@ def search():
         print('指をセンサーにかざしてください...')
         while ( f.readImage() == False ): pass
 
-        # 読み取った画像を特性に変換し、文字バッファ1に格納
+        # 読み取った画像を特性に変換し、charbuffer1に格納
         f.convertImage(0x01)
         # 検索
         result = f.searchTemplate()
@@ -28,37 +28,80 @@ def search():
 
         if ( positionNumber == -1 ):
             print('不一致')
-            exit(0)
         else:
             print('一致 Index番号#' + str(positionNumber))
             print('一致度: ' + str(accuracyScore))
+        return result
 
     except Exception as e:
         print(f'エラー : {e}')
-        exit(1)
 
 ### 登録済みのindexを表示
 def index():
     try:
         tableIndex = f.getTemplateIndex(0)
+        TrueIndex = []
         for i in range(0, len(tableIndex)):
-            print('#' + str(i) + ' is used: ' + str(tableIndex[i]))
+            if ( tableIndex[i]):
+                print(f'#{str(i)}')
+                TrueIndex.append(i)
+        return TrueIndex
 
     except Exception as e:
         print(f'エラー : {e}')
-        exit(1)
 
 ### 指紋を削除
 def delete():
-    pass
+    try:
+        positionNumber = input('削除するIndex番号を入力してください: ')
+        positionNumber = int(positionNumber)
+        if ( f.deleteTemplate(positionNumber) == True ):
+            print(f'削除しました #{positionNumber}')
+            return True
+        else :
+            print(f'削除できませんでした #{positionNumber}')
+            return False
+
+    except Exception as e:
+        print(f'エラー : {e}')
 
 ### 指紋を登録
 def enroll():
-    pass
+    try:
+        ## 指紋を検索
+        result = search()
+        positionNumber = result[0]
+
+        if ( positionNumber >= 0 ):
+            print(f'既に登録済みです #{str(positionNumber)}')
+            exit(0)
+
+        print('指を離してください...')
+        # while ( f.readImage() == True ): pass
+        time.sleep(2)
+
+        print('もう一度指をセンサーにかざしてください...')
+        while ( f.readImage() == False ): pass
+
+        # 読み取った画像を特性に変換し、charbuffer2に格納
+        f.convertImage(0x02)
+        # charbufferを比較
+        if ( f.compareCharacteristics() == 0 ): raise Exception('指紋が一致しません')
+        # テンプレートの作成
+        f.createTemplate()
+
+        # テンプレートを保存
+        positionNumber = f.storeTemplate()
+        print(f'指紋は正常に登録されました #{str(positionNumber)}')
+        return True
+
+    except Exception as e:
+        print(f'エラー : {e}')
+        return False
 
 if __name__ == "__main__":
-    search()
-    # index()
+    # search()
+    index()
     # delete()
     # enroll()
     pass
