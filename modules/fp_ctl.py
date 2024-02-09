@@ -122,7 +122,7 @@ if __name__ == "__main__":
         time.sleep(1)
 
     # search()
-    # index()
+    index()
     # delete()
     enroll()
     # test()
