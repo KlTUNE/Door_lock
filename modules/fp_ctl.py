@@ -1,4 +1,5 @@
-from pyfingerprint.pyfingerprint import PyFingerprint
+if __name__ == "__main__": from pyfingerprint import PyFingerprint
+# else: from modules.fingerprint import PyFingerprint
 import time
 
 # 指紋センサーのセットアップ&初期化
