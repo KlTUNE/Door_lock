@@ -114,9 +114,8 @@ if __name__ == "__main__":
     #     time.sleep(1)
     #     _led_on()
     #     time.sleep(1)
-
-    # search()
-    # index()
+    index()
+    search()
     delete()
     # enroll()
     # test()
