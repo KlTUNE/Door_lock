@@ -18,6 +18,10 @@ def search():
         print('指をセンサーにかざしてください...')
         while ( f.readImage() == False ): pass
 
+        print("検知")
+        time.sleep(10)
+        print("検索")
+
         # 読み取った画像を特性に変換し、charbuffer1に格納
         f.convertImage(0x01)
         # 検索
