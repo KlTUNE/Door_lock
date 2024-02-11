@@ -1,4 +1,5 @@
-from pyfingerprint import PyFingerprint
+from modules.pyfingerprint import PyFingerprint
+# from pyfingerprint import PyFingerprint
 import time
 
 # 指紋センサーのセットアップ&初期化
