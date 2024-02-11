@@ -1,5 +1,4 @@
-if __name__ == "__main__": from pyfingerprint import PyFingerprint
-else: from fingerprint.fingerprint import PyFingerprint
+from pyfingerprint import PyFingerprint
 import time
 
 # 指紋センサーのセットアップ&初期化
@@ -109,11 +108,11 @@ def _led_off():
     print('LED OFF')
 
 if __name__ == "__main__":
-    # for i in range(5):
-    #     _led_off()
-    #     time.sleep(1)
-    #     _led_on()
-    #     time.sleep(1)
+    for i in range(5):
+        _led_off()
+        time.sleep(1)
+        _led_on()
+        time.sleep(1)
     index()
     search()
     delete()
