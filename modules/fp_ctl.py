@@ -112,14 +112,14 @@ def _led_off():
     print('LED OFF')
 
 if __name__ == "__main__":
-    for i in range(5):
-        _led_off()
-        time.sleep(1)
-        _led_on()
-        time.sleep(1)
-    index()
+    # for i in range(5):
+    #     _led_off()
+    #     time.sleep(1)
+    #     _led_on()
+    #     time.sleep(1)
+    enroll()
+    # index()
     search()
-    delete()
-    # enroll()
+    # delete()
     # test()
     pass
