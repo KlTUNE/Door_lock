@@ -1,7 +1,5 @@
 import RPi.GPIO as GPIO
-import sys
-import os
-import atexit
+from modules import fp_ctl
 import time
 
 Senser = 24
@@ -10,8 +8,5 @@ GPIO.setup(Senser, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 while True:
     if GPIO.input(Senser) == 0:
-        print(0)
-    else:
-        print(1)
-    time.sleep(1)
-    print("-----------------")
+        fp_ctl.search()
+    # time.sleep(1)
