@@ -7,11 +7,13 @@ import os
 OPEN_PIN = 3
 CLOSE_PIN = 4
 TOUCH_SENSOR_PIN = 14
+open_button = 15
+close_button = 17
+lock_status = ""
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(OPEN_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(CLOSE_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(TOUCH_SENSOR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(close_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # os.system("sudo tmux new -s key -d 'sudo python key.py'")
 
