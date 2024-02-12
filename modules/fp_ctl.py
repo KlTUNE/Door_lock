@@ -1,5 +1,4 @@
-from modules.pyfingerprint import PyFingerprint
-# from pyfingerprint import PyFingerprint
+from pyfingerprint.pyfingerprint import PyFingerprint
 import time
 
 # 指紋センサーのセットアップ&初期化
@@ -101,22 +100,9 @@ def enroll():
         traceback.print_exc()
         return False
 
-def _led_on():
-    f.led_on()
-    print('LED ON')
-def _led_off():
-    f.led_off()
-    print('LED OFF')
-
 if __name__ == "__main__":
-    # for i in range(5):
-    #     _led_off()
-    #     time.sleep(1)
-    #     _led_on()
-    #     time.sleep(1)
     # enroll()
     # index()
     search()
     # delete()
-    # test()
     pass

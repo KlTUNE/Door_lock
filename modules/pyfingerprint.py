@@ -1387,20 +1387,3 @@ class PyFingerprint(object):
                 completePayload.append(receivedPacketPayload[i])
 
         return completePayload
-
-    def led_off(self):
-        # packetPayload = (
-        #     FINGERPRINT_READIMAGE,
-        # )
-
-        # self.__writePacket(FINGERPRINT_COMMANDPACKET, packetPayload)
-        # receivedPacket = self.__readPacket()
-        pass
-
-    def led_on(self):
-        packetPayload = (
-            FINGERPRINT_READIMAGE,
-        )
-
-        self.__writePacket(FINGERPRINT_COMMANDPACKET, packetPayload)
-        receivedPacket = self.__readPacket()
