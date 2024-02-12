@@ -8,8 +8,10 @@
 ## 実行方法
 <pre>
 pip install pyfingerprint
-pip install raspgip
+pip install RPi.GPIO
 pip install flask
+        or
+pip install -r requirements.txt
 
 python3 main.py
 </pre>

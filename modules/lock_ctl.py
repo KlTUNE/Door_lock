@@ -1,20 +1,18 @@
 import RPi.GPIO as GPIO
 import time
 
-servo_pin = 14
-LED_pin = 23
+SERVO_PIN = 14
+STATUS_LED_PIN = 23
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(servo_pin, GPIO.OUT)
-GPIO.setup(LED_pin, GPIO.OUT)
-status_LED = GPIO.PWM(LED_pin, 50)
-status_LED.start(0)
-servo = GPIO.PWM(servo_pin, 50)
+GPIO.setup(SERVO_PIN, GPIO.OUT)
+GPIO.setup(STATUS_LED_PIN, GPIO.OUT)
+servo = GPIO.PWM(SERVO_PIN, 50)
 servo.start(0)
 
 
 def open():
     print("open")
-    status_LED.ChangeDutyCycle(0)
+    GPIO.output(STATUS_LED_PIN, 1)
     servo.ChangeDutyCycle(7.25)
     time.sleep(0.5)
     servo.ChangeDutyCycle(0)
@@ -22,7 +20,7 @@ def open():
 
 def lock():
     print("lock")
-    status_LED.ChangeDutyCycle(30)
+    GPIO.output(STATUS_LED_PIN, 1)
     servo.ChangeDutyCycle(2.5)
     time.sleep(0.5)
     servo.ChangeDutyCycle(0)
