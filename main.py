@@ -1,9 +1,9 @@
 from modules import fp_ctl, lock_ctl
 import RPi.GPIO as GPIO
 
-OPEN_PIN = 3
-CLOSE_PIN = 4
-TOUCH_SENSOR_PIN = 14
+OPEN_PIN = 2
+CLOSE_PIN = 3
+TOUCH_SENSOR_PIN = 4
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(OPEN_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
