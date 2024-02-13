@@ -1,8 +1,5 @@
 from modules import fp_ctl, lock_ctl
-import os, time
 import RPi.GPIO as GPIO
-import datetime
-import os
 
 OPEN_PIN = 3
 CLOSE_PIN = 4
@@ -13,13 +10,23 @@ GPIO.setup(OPEN_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(CLOSE_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(TOUCH_SENSOR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-# os.system("sudo tmux new -s key -d 'sudo python key.py'")
-
 def main():
     while True:
-        pass
+        if GPIO.input(TOUCH_SENSOR_PIN) == 1:
+            result = fp_ctl.search()
+            if result: lock_ctl.open()
+            else: lock_ctl.lock()
 
+        if GPIO.input(OPEN_PIN) == 0:
+            lock_ctl.open()
+
+        if GPIO.input(CLOSE_PIN) == 0:
+            lock_ctl.lock()
 
 if __name__ == "__main__":
-    main()
-    pass
+    try:
+        main()
+    except:
+        print("clean")
+        lock_ctl.clean()
+        GPIO.cleanup()

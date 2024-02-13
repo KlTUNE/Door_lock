@@ -28,13 +28,15 @@ def search():
 
         if ( positionNumber == -1 ):
             print('不一致')
+            return True
         else:
             print('一致 Index番号#' + str(positionNumber))
             print('一致度: ' + str(accuracyScore))
-        return result
+            return False
 
     except Exception as e:
         print(f'エラー : {e}')
+        return False
 
 ### 登録済みのindexを表示
 def index():
@@ -49,6 +51,7 @@ def index():
 
     except Exception as e:
         print(f'エラー : {e}')
+        return []
 
 ### 指紋を削除
 def delete():
@@ -64,6 +67,7 @@ def delete():
 
     except Exception as e:
         print(f'エラー : {e}')
+        return False
 
 ### 指紋を登録
 def enroll():

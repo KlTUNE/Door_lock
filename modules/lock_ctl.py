@@ -12,7 +12,7 @@ servo.start(0)
 
 def open():
     print("open")
-    GPIO.output(STATUS_LED_PIN, 1)
+    GPIO.output(STATUS_LED_PIN, 0)
     servo.ChangeDutyCycle(7.25)
     time.sleep(0.5)
     servo.ChangeDutyCycle(0)
@@ -25,6 +25,9 @@ def lock():
     time.sleep(0.5)
     servo.ChangeDutyCycle(0)
 
+def clean():
+    servo.stop()
+    GPIO.cleanup()
 
 if __name__ == "__main__":
     # open()
