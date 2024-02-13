@@ -1,7 +1,13 @@
 #!bin/bash
 
-SCREEN_NAME="Door_lock"
+DIR_NAME="Door_lock"
 
-tmux send-keys -t $SCREEN_NAME ^C
-sleep 5
-tmux kill-session -t $SCREEN_NAME
+tmux send-keys -t $DIR_NAME ^C
+sleep 2
+tmux kill-session -t $DIR_NAME
+
+WEB_NAME="Door_lock_WEB"
+
+tmux send-keys -t $WEB_NAME ^C
+sleep 2
+tmux kill-session -t $WEB_NAME

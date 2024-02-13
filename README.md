@@ -14,6 +14,7 @@ pip install flask
 pip install -r requirements.txt
 
 python3 main.py
+python3 web_server.py
 </pre>
 
 ## プログラム
@@ -23,7 +24,6 @@ python3 main.py
 ### プログラム一覧
 - main.py
     - 指紋認証モジュール、内側のボタンからの入力の監視、制御を行う。
-    - また、web_server.pyをマルチスレッドを利用し、別スレッドで立ち上げる。
 - web_server.py
     - FLASKを利用してwebサーバーを立ち上げ、HTTPリクエストを処理する。
 - fp_ctl.py
