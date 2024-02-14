@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, make_response, redirect
+from flask import Flask, render_template, request, jsonify
 from modules import lock_ctl, password_check
 
 app = Flask(__name__)
@@ -30,8 +30,4 @@ def index():
     return render_template("index.html")
 
 if __name__ == '__main__':
-    try:
-        app.run(debug=True, host='0.0.0.0', port=80)
-    except:
-        print("clean")
-        lock_ctl.clean()
+    app.run(debug=True, host='0.0.0.0', port=80)
