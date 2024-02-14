@@ -12,4 +12,4 @@ ExecStop=/home/masaki/Door_lock/stop.sh
 Restart=always
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=network-online.target
