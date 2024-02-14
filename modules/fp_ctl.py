@@ -105,8 +105,8 @@ def enroll():
         return False
 
 if __name__ == "__main__":
-    # enroll()
+    enroll()
     # index()
-    search()
-    # delete()
+    # search()
+    delete()
     pass

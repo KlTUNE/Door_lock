@@ -25,6 +25,7 @@ def main():
 
 if __name__ == "__main__":
     try:
+        lock_ctl.open()
         main()
     except:
         print("clean")
