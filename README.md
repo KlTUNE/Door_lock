@@ -9,7 +9,7 @@
 <pre>
 pip install pyfingerprint
 pip install RPi.GPIO
-pip install flask
+pip install Flask
         or
 pip install -r requirements.txt
 

@@ -1,6 +1,7 @@
 #!bin/bash
 
-# DIR_NAME="doorlock"
+# mv -i ./Door_lock/sh/* ./
+DIR_NAME="Door_lock"
 
 # tmux new -s $DIR_NAME -d
 # sleep 1
@@ -9,8 +10,6 @@
 # tmux send-keys -t $DIR_NAME "git clone https://github.com/KlTUNE/Door_lock.git" C-m
 # sleep 10
 # tmux send-keys -t $DIR_NAME "python ./Door_lock/main.py" C-m
-
-DIR_NAME="Door_lock"
 
 tmux new -s $DIR_NAME -d
 sleep 1
