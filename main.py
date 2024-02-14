@@ -28,5 +28,4 @@ if __name__ == "__main__":
         main()
     except:
         print("clean")
-        lock_ctl.clean()
         GPIO.cleanup()
