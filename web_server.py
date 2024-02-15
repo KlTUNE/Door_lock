@@ -3,6 +3,7 @@ from modules import lock_ctl, password_check
 
 app = Flask(__name__)
 
+# /open/ にPOSTリクエストを送ると、パスワードをチェックして開錠する
 @app.route('/open/', methods=['POST'])
 def open():
     try:
@@ -14,6 +15,7 @@ def open():
     except Exception as e:
         return jsonify({'status': 'error', 'message': e})
 
+# /lock/ にGETリクエストを送ると、施錠する
 @app.route('/lock/')
 def lock():
     try:
@@ -23,6 +25,7 @@ def lock():
     except Exception as e:
         return jsonify({'status': 'error', 'message': e})
 
+# 開錠、施錠ができるWebページを表示する
 @app.route('/')
 def index():
     return render_template("index.html")

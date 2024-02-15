@@ -1,29 +1,40 @@
 import RPi.GPIO as GPIO
 import time
 
+# サーボのPWMの出力ピン番号
 SERVO_PIN = 18
+# ステータスLEDの出力ピン番号
 STATUS_LED_PIN = 17
+# GIPOの設定
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 GPIO.setup(SERVO_PIN, GPIO.OUT)
 GPIO.setup(STATUS_LED_PIN, GPIO.OUT)
+# サーボのPWMの設定
 servo = GPIO.PWM(SERVO_PIN, 50)
 servo.start(0)
 
+# 開錠
 def open():
     print('open')
+    # ステータスLEDを消灯
     GPIO.output(STATUS_LED_PIN, 0)
+    # サーボを左に90度回転
     servo.ChangeDutyCycle(7.25)
     time.sleep(0.5)
     servo.ChangeDutyCycle(0)
 
+# 施錠
 def lock():
     print('lock')
+    # ステータスLEDを点灯
     GPIO.output(STATUS_LED_PIN, 1)
+    # サーボを右に90度回転
     servo.ChangeDutyCycle(2.5)
     time.sleep(0.5)
     servo.ChangeDutyCycle(0)
 
+# GPIOの初期化
 def cleanup():
     servo.stop()
     GPIO.cleanup()
