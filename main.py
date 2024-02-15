@@ -22,7 +22,9 @@ def main():
                 print(result)
                 if result: lock_ctl.open()
                 else: lock_ctl.lock()
-                while GPIO.input(TOUCH_SENSOR_PIN) == 1: pass
+                while GPIO.input(TOUCH_SENSOR_PIN) == 1:
+                    print("waiting...")
+                    pass
 
             if GPIO.input(OPEN_PIN) == 0:
                 lock_ctl.open()
