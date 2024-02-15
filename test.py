@@ -2,11 +2,10 @@ import RPi.GPIO as GPIO
 from modules import fp_ctl
 import time
 
-TOUCH_SENSOR_PIN = 24
+STATUS_LED_PIN = 17
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(TOUCH_SENSOR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(STATUS_LED_PIN, GPIO.OUT)
 
+GPIO.output(STATUS_LED_PIN, 1)
 while True:
-    if GPIO.input(TOUCH_SENSOR_PIN) == 1:
-        fp_ctl.search()
-        time.sleep(5)
+    pass
