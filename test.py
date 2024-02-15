@@ -8,4 +8,5 @@ GPIO.setup(STATUS_LED_PIN, GPIO.OUT)
 
 GPIO.output(STATUS_LED_PIN, 1)
 while True:
-    pass
+    print("wait")
+    time.sleep(1)
