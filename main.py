@@ -27,6 +27,6 @@ if __name__ == "__main__":
     try:
         lock_ctl.open()
         main()
-    except:
+    except KeyboardInterrupt:
         print("clean")
         GPIO.cleanup()
