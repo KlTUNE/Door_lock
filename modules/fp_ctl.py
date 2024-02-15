@@ -99,9 +99,7 @@ def enroll():
         return True
 
     except Exception as e:
-        # print(f'エラー : {e}')
-        import traceback
-        traceback.print_exc()
+        print(f'エラー : {e}')
         return False
 
 if __name__ == "__main__":
