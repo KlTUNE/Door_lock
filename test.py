@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-from modules import fp_ctl
+# from modules import fp_ctl
 import time
 
 STATUS_LED_PIN = 17

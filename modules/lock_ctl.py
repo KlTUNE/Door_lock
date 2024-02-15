@@ -18,8 +18,8 @@ def open():
     servo.ChangeDutyCycle(7.25)
     time.sleep(0.5)
     servo.ChangeDutyCycle(0)
-    servo.stop()
-    GPIO.cleanup()
+    # servo.stop()
+    # GPIO.cleanup()
 
 
 def lock():
@@ -28,8 +28,8 @@ def lock():
     servo.ChangeDutyCycle(2.5)
     time.sleep(0.5)
     servo.ChangeDutyCycle(0)
-    servo.stop()
-    GPIO.cleanup()
+    # servo.stop()
+    # GPIO.cleanup()
 
 if __name__ == "__main__":
     open()
