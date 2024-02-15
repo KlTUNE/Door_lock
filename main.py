@@ -26,7 +26,8 @@ def main():
                 lock_ctl.lock()
 
         except KeyboardInterrupt:
-            print("clean")
+            print("cleanup...")
+            lock_ctl.cleanup()
             GPIO.cleanup()
 
 if __name__ == "__main__":

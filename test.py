@@ -4,10 +4,7 @@ import time
 
 STATUS_LED_PIN = 17
 GPIO.setmode(GPIO.BCM)
-try:
-    GPIO.setup(STATUS_LED_PIN, GPIO.OUT)
-except:
-    GPIO.cleanup()
-    GPIO.setup(STATUS_LED_PIN, GPIO.OUT)
+GPIO.cleanup()
+GPIO.setup(STATUS_LED_PIN, GPIO.OUT)
 
 GPIO.output(STATUS_LED_PIN, 1)
