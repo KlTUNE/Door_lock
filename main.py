@@ -23,7 +23,7 @@ def main():
                 if result: lock_ctl.open()
                 else: lock_ctl.lock()
                 while GPIO.input(TOUCH_SENSOR_PIN) == 1:
-                    print("waiting...")
+                    print("指を話してください")
                     pass
 
             if GPIO.input(OPEN_PIN) == 0:
@@ -38,6 +38,7 @@ def main():
             exit(1)
 
         time.sleep(0.5)
+        print("waiting...")
 
 if __name__ == "__main__":
     main()
