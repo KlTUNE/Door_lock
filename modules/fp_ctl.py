@@ -28,11 +28,11 @@ def search():
 
         if ( positionNumber == -1 ):
             print('不一致')
-            return True
+            return False
         else:
             print('一致 Index番号#' + str(positionNumber))
             print('一致度: ' + str(accuracyScore))
-            return False
+            return True
 
     except Exception as e:
         print(f'エラー : {e}')

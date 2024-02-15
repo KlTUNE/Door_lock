@@ -16,17 +16,19 @@ def main():
     lock_ctl.open()
     while True:
         try:
-            print(GPIO.input(OPEN_PIN))
+
             if GPIO.input(TOUCH_SENSOR_PIN) == 1:
                 result = fp_ctl.search()
+                print(result)
                 if result: lock_ctl.open()
                 else: lock_ctl.lock()
+                while GPIO.input(TOUCH_SENSOR_PIN) == 1: pass
 
-            # if GPIO.input(OPEN_PIN) == 0:
-            #     lock_ctl.open()
+            if GPIO.input(OPEN_PIN) == 0:
+                lock_ctl.open()
 
-            # if GPIO.input(CLOSE_PIN) == 0:
-            #     lock_ctl.lock()
+            if GPIO.input(CLOSE_PIN) == 0:
+                lock_ctl.lock()
 
         except KeyboardInterrupt:
             print("cleanup...")
