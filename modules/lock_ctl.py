@@ -34,6 +34,15 @@ def lock():
     time.sleep(0.5)
     servo.ChangeDutyCycle(0)
 
+# エラー時のLED点滅
+def error_led():
+    for _ in range(3):
+        GPIO.output(STATUS_LED_PIN, 1)
+        time.sleep(0.1)
+        GPIO.output(STATUS_LED_PIN, 0)
+        time.sleep(0.1)
+    GPIO.output(STATUS_LED_PIN, 1)
+
 # GPIOの初期化
 def cleanup():
     servo.stop()

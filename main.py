@@ -25,6 +25,7 @@ def main():
             # タッチセンサーが押されたら指紋認証を行う
             if GPIO.input(TOUCH_SENSOR_PIN) == 1:
                 result = fp_ctl.search()
+                if not result: lock_ctl.error_led()
                 if result and LOCK_STATUS == "LOCK":
                     lock_ctl.open()
                     LOCK_STATUS = "OPEN"
