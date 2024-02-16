@@ -29,7 +29,7 @@ def main():
                 if result and LOCK_STATUS == "LOCK":
                     lock_ctl.open()
                     LOCK_STATUS = "OPEN"
-                elif LOCK_STATUS == "OPEN":
+                elif not result and LOCK_STATUS == "OPEN":
                     lock_ctl.lock()
                     LOCK_STATUS = "LOCK"
                 # 指紋認証後、タッチセンサーが離されるまで待つ

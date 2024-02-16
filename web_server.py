@@ -8,6 +8,7 @@ LOCK_STATUS = "OPEN"
 # /open/ にPOSTリクエストを送ると、パスワードをチェックして開錠する
 @app.route('/open/', methods=['POST'])
 def open():
+    global LOCK_STATUS
     try:
         password = request.form.get('pw', None)
         if password_check.check(password) and LOCK_STATUS == "LOCK":
@@ -22,6 +23,7 @@ def open():
 # /lock/ にGETリクエストを送ると、施錠する
 @app.route('/lock/')
 def lock():
+    global LOCK_STATUS
     try:
         if LOCK_STATUS == "OPEN":
             lock_ctl.lock()
