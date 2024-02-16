@@ -2,13 +2,17 @@ from flask import Flask, render_template, request, jsonify
 from modules import lock_ctl, password_check
 
 app = Flask(__name__)
+# 開錠状態
+LOCK_STATUS = "OPEN"
 
 # /open/ にPOSTリクエストを送ると、パスワードをチェックして開錠する
 @app.route('/open/', methods=['POST'])
 def open():
     try:
         password = request.form.get('pw', None)
-        if password_check.check(password): lock_ctl.open()
+        if password_check.check(password) and LOCK_STATUS == "LOCK":
+            lock_ctl.open()
+            LOCK_STATUS = "OPEN"
         else: return jsonify({'status': 'error', 'message': 'パスワードが違います'})
         return jsonify({'status': 'ok'})
 
@@ -19,7 +23,9 @@ def open():
 @app.route('/lock/')
 def lock():
     try:
-        lock_ctl.lock()
+        if LOCK_STATUS == "OPEN":
+            lock_ctl.lock()
+            LOCK_STATUS = "LOCK"
         return jsonify({'status': 'ok'})
 
     except Exception as e:

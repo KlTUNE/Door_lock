@@ -18,19 +18,29 @@ GPIO.setup(TOUCH_SENSOR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 def main():
     # 最初に開錠しておく
     lock_ctl.open()
+    # 開錠状態
+    LOCK_STATUS = "OPEN"
     while True:
         try:
             # タッチセンサーが押されたら指紋認証を行う
             if GPIO.input(TOUCH_SENSOR_PIN) == 1:
                 result = fp_ctl.search()
-                if result: lock_ctl.open()
-                else: lock_ctl.lock()
+                if result and LOCK_STATUS == "LOCK":
+                    lock_ctl.open()
+                    LOCK_STATUS = "OPEN"
+                elif LOCK_STATUS == "OPEN":
+                    lock_ctl.lock()
+                    LOCK_STATUS = "LOCK"
                 # 指紋認証後、タッチセンサーが離されるまで待つ
                 while GPIO.input(TOUCH_SENSOR_PIN) == 1: pass
 
             # 開錠ボタン、施錠ボタンが押されたら開錠、施錠を行う
-            if GPIO.input(OPEN_PIN) == 0: lock_ctl.open()
-            if GPIO.input(CLOSE_PIN) == 0: lock_ctl.lock()
+            if GPIO.input(OPEN_PIN) == 0 and LOCK_STATUS == "LOCK":
+                lock_ctl.open()
+                LOCK_STATUS = "OPEN"
+            if GPIO.input(CLOSE_PIN) == 0 and LOCK_STATUS == "OPEN":
+                lock_ctl.lock()
+                LOCK_STATUS = "LOCK"
 
         except KeyboardInterrupt:
             # Ctrl+Cが押されたらGIPを初期化して終了
