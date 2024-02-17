@@ -61,7 +61,7 @@ def main():
             GPIO.cleanup()
             exit(1)
         # チャタリング防止のための待機
-        time.sleep(0.2)
+        time.sleep(0.1)
 
 if __name__ == "__main__":
     main()
