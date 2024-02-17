@@ -21,7 +21,7 @@ def open():
     GPIO.output(STATUS_LED_PIN, 0)
     # サーボを左に90度回転
     servo.ChangeDutyCycle(7.25)
-    time.sleep(0.5)
+    time.sleep(1)
     servo.ChangeDutyCycle(0)
 
 # 施錠
@@ -31,7 +31,7 @@ def lock():
     GPIO.output(STATUS_LED_PIN, 1)
     # サーボを右に90度回転
     servo.ChangeDutyCycle(2.5)
-    time.sleep(0.5)
+    time.sleep(1)
     servo.ChangeDutyCycle(0)
 
 # エラー時のLED点滅
