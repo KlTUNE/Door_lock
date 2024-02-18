@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from modules import lock_ctl, password_check
+from modules import lock_ctl, password_check, record_log
 
 app = Flask(__name__)
 HTML = """
@@ -82,7 +82,10 @@ def open():
         if password_check.check(password) and LOCK_STATUS == "LOCK":
             lock_ctl.open()
             LOCK_STATUS = "OPEN"
-        else: return jsonify({'status': 'error', 'message': 'パスワードが違います'})
+            record_log.write_log(request.remote_addr, "OPEN", "SUCCESS")
+        else:
+            record_log.write_log(request.remote_addr, "ERROR", "PASSWORD ERROR")
+            return jsonify({'status': 'error', 'message': 'パスワードが違います'})
         return jsonify({'status': 'ok'})
 
     except Exception as e:
@@ -96,6 +99,7 @@ def lock():
         if LOCK_STATUS == "OPEN":
             lock_ctl.lock()
             LOCK_STATUS = "LOCK"
+            record_log.write_log(request.remote_addr, "LOCK", "SUCCESS")
         return jsonify({'status': 'ok'})
 
     except Exception as e:

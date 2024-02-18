@@ -32,6 +32,9 @@ python3 web_server.py
 - lock_ctl.py
     - サーボモーター、LEDなどを制御し、実査に施錠・開錠を行う。
     - main.py、web_server.pyから呼び出される.
+- record_log.py
+    - ドアロックのアクセスログ、ロックの開閉状態を記録する。
+    - main.py、web_server.pyから呼び出される.
 - password_check.py
     - HTTPリクエストにより送られてきた解錠のためのパスワードの認証を行う。
     - web_server.pyから呼び出される。
