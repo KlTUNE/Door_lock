@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, jsonify
 from modules import lock_ctl, password_check, record_log
 
 app = Flask(__name__)
@@ -102,7 +102,6 @@ def lock():
 # 開錠、施錠ができるWebページを表示する
 @app.route('/')
 def index():
-    # return render_template("index.html")
     return HTML
 
 if __name__ == '__main__':
