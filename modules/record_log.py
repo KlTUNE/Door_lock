@@ -1,4 +1,5 @@
 from datetime import datetime
+from pathlib import Path
 
 # ログファイルのパス
 LOG_FILE = "./access.log"
@@ -7,8 +8,12 @@ MAX_LOG_LINES = 1000
 
 # ログを記録する
 def write_log(_from, status, message):
-    with open(LOG_FILE, "r") as file:
-        logs = file.readlines()
+    try:
+        with open(LOG_FILE, "r") as file: logs = file.readlines()
+    except FileNotFoundError:
+        file_path_obj = Path(LOG_FILE)
+        file_path_obj.touch()
+        logs = []
     if len(logs) > MAX_LOG_LINES: logs = logs[len(logs)+1-MAX_LOG_LINES:]
     dt_now = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
     logs.append(f"{_from} | {dt_now} | {status} | {message}\n")
@@ -33,6 +38,8 @@ def adjust_log(log):
     return log
 
 if __name__ == "__main__":
-    # write_log("test", "OPEN", "SUCCESS")
-    print(read_before_log()[2])
+    write_log("test", "OPEN", "SUCCESS")
+    # print(read_before_log()[2])
+    # file_path_obj = Path("./test.log")
+    # file_path_obj.touch()
     pass
