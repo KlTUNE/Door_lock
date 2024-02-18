@@ -11,6 +11,7 @@ def write_log(_from, status, message):
     try:
         with open(LOG_FILE, "r") as file: logs = file.readlines()
     except FileNotFoundError:
+        # ファイルが存在しない場合は作成する
         file_path_obj = Path(LOG_FILE)
         file_path_obj.touch()
         logs = []
