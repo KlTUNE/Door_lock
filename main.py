@@ -50,9 +50,8 @@ def main():
             # 自動開錠する時刻になったら開錠する
             dt_now = datetime.datetime.now()
             if dt_now.time() > open_time and dt_now.time() < diff_open_time:
-                if LOCK_STATUS == "LOCK":
-                    lock_ctl.open()
-                    LOCK_STATUS = "OPEN"
+                lock_ctl.open()
+                LOCK_STATUS = "OPEN"
                 time.sleep(0.5)
 
         except KeyboardInterrupt:
