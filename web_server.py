@@ -70,18 +70,13 @@ HTML = """
 </html>
 """
 
-# 開錠状態
-LOCK_STATUS = "OPEN"
-
 # /open/ にPOSTリクエストを送ると、パスワードをチェックして開錠する
 @app.route('/open/', methods=['POST'])
 def open():
-    global LOCK_STATUS
     try:
         password = request.form.get('pw', None)
-        if password_check.check(password) and LOCK_STATUS == "LOCK":
-            lock_ctl.open()
-            LOCK_STATUS = "OPEN"
+        if password_check.check(password):
+            if record_log.read_before_log()[2] == "LOCK": lock_ctl.open()
             record_log.write_log(request.remote_addr, "OPEN", "SUCCESS")
         else:
             record_log.write_log(request.remote_addr, "ERROR", "PASSWORD ERROR")
@@ -89,20 +84,19 @@ def open():
         return jsonify({'status': 'ok'})
 
     except Exception as e:
+        record_log.write_log(request.remote_addr, "ERROR", f"ERROR:{e}")
         return jsonify({'status': 'error', 'message': e})
 
 # /lock/ にGETリクエストを送ると、施錠する
 @app.route('/lock/')
 def lock():
-    global LOCK_STATUS
     try:
-        if LOCK_STATUS == "OPEN":
-            lock_ctl.lock()
-            LOCK_STATUS = "LOCK"
-            record_log.write_log(request.remote_addr, "LOCK", "SUCCESS")
+        if record_log.read_before_log()[2] == "OPEN": lock_ctl.lock()
+        record_log.write_log(request.remote_addr, "LOCK", "SUCCESS")
         return jsonify({'status': 'ok'})
 
     except Exception as e:
+        record_log.write_log(request.remote_addr, "ERROR", f"ERROR:{e}")
         return jsonify({'status': 'error', 'message': e})
 
 # 開錠、施錠ができるWebページを表示する

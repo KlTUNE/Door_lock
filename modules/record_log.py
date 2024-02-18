@@ -33,5 +33,6 @@ def adjust_log(log):
     return log
 
 if __name__ == "__main__":
-    write_log("test", "OPEN", "SUCCESS")
+    # write_log("test", "OPEN", "SUCCESS")
+    print(read_before_log()[2])
     pass

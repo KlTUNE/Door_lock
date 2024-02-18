@@ -21,8 +21,6 @@ def main():
     diff_open_time = datetime.time(OPEN_TIME[0], OPEN_TIME[1], OPEN_TIME[2] + 1)
     # 最初に開錠しておく
     lock_ctl.open()
-    # 開錠状態
-    LOCK_STATUS = "OPEN"
     record_log.write_log("BOOT", "OPEN", "SUCCESS")
     while True:
         try:
@@ -30,34 +28,29 @@ def main():
             if GPIO.input(TOUCH_SENSOR_PIN) == 1:
                 result = fp_ctl.search()
                 if not result: lock_ctl.error_led()
-                if result and LOCK_STATUS == "LOCK":
-                    lock_ctl.open()
-                    LOCK_STATUS = "OPEN"
+                if result:
+                    if record_log.read_before_log()[2] == "LOCK": lock_ctl.open()
                     record_log.write_log("FINGER", "OPEN", "SUCCESS")
-                elif not result and LOCK_STATUS == "OPEN":
-                    lock_ctl.lock()
-                    LOCK_STATUS = "LOCK"
+                elif not result:
+                    if record_log.read_before_log()[2] == "OPEN": lock_ctl.lock()
                     record_log.write_log("FINGER", "LOCK", "FINGER ERROR")
-                # 指紋認証後、タッチセンサーが離されるまで待つ
+                # 指紋認証後、タッチセンサーが押されていた場合、指が離されるまで待つ
                 while GPIO.input(TOUCH_SENSOR_PIN) == 1: pass
 
             # 開錠ボタン、施錠ボタンが押されたら開錠、施錠を行う
-            if GPIO.input(OPEN_PIN) == 0 and LOCK_STATUS == "LOCK":
-                lock_ctl.open()
-                LOCK_STATUS = "OPEN"
+            if GPIO.input(OPEN_PIN) == 0:
+                if record_log.read_before_log()[2] == "LOCK": lock_ctl.open()
                 record_log.write_log("BUTTON", "OPEN", "SUCCESS")
-            if GPIO.input(CLOSE_PIN) == 0 and LOCK_STATUS == "OPEN":
-                lock_ctl.lock()
-                LOCK_STATUS = "LOCK"
+            if GPIO.input(CLOSE_PIN) == 0:
+                if record_log.read_before_log()[2] == "OPEN": lock_ctl.lock()
                 record_log.write_log("BUTTON", "LOCK", "SUCCESS")
 
             # 自動開錠する時刻になったら開錠する
             dt_now = datetime.datetime.now()
             if dt_now.time() > open_time and dt_now.time() < diff_open_time:
                 lock_ctl.open()
-                LOCK_STATUS = "OPEN"
                 record_log.write_log("TIME", "OPEN", "SUCCESS")
-                time.sleep(0.5)
+                time.sleep(1)
 
         except KeyboardInterrupt:
             # Ctrl+Cが押されたらGIPを初期化して終了
@@ -68,4 +61,7 @@ def main():
         time.sleep(0.1)
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("qawsedrftgyhujikolp")
