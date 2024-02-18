@@ -16,7 +16,7 @@ GPIO.setup(TOUCH_SENSOR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 def main():
     # 自動開錠する時刻の設定
-    OPEN_TIME = [1, 13, 0]
+    OPEN_TIME = [1, 0, 0]
     open_time = datetime.time(OPEN_TIME[0], OPEN_TIME[1], OPEN_TIME[2])
     diff_open_time = datetime.time(OPEN_TIME[0], OPEN_TIME[1], OPEN_TIME[2] + 1)
     # 最初に開錠しておく
