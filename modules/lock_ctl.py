@@ -1,5 +1,4 @@
 import RPi.GPIO as GPIO
-from modules import record_log
 import time
 
 # サーボのPWMの出力ピン番号
@@ -17,7 +16,7 @@ servo.start(0)
 
 # 開錠
 def open():
-    print(" | ".join(record_log.read_before_log()))
+    print("OPEN")
     # ステータスLEDを消灯
     GPIO.output(STATUS_LED_PIN, 0)
     # サーボを左に90度回転
@@ -27,7 +26,7 @@ def open():
 
 # 施錠
 def lock():
-    print(" | ".join(record_log.read_before_log()))
+    print("LOCK")
     # ステータスLEDを点灯
     GPIO.output(STATUS_LED_PIN, 1)
     # サーボを右に90度回転
