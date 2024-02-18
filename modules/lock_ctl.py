@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
-import time, record_log
+from modules import record_log
+import time
 
 # サーボのPWMの出力ピン番号
 SERVO_PIN = 18
