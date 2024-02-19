@@ -31,7 +31,7 @@ def search():
 
     except Exception as e:
         print(f'エラー : {e}')
-        return False
+        return -1
 
 ### 登録済みのindexを表示
 def index():
@@ -68,8 +68,7 @@ def delete():
 def enroll():
     try:
         ## 指紋を検索
-        result = search()
-        positionNumber = result[0]
+        positionNumber = search()
 
         if ( positionNumber >= 0 ):
             print(f'既に登録済みです #{str(positionNumber)}')
