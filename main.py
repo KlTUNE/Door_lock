@@ -26,10 +26,16 @@ def main():
         # タッチセンサーが押されたら指紋認証を行う
         if GPIO.input(TOUCH_SENSOR_PIN) == 1:
             result = fp_ctl.search()
-            if result:
-                if record_log.read_before_log()[2] == "LOCK": lock_ctl.open()
+            # 右人差し指が検出された場合、開錠する
+            if result == 0 or result == 1:
+                lock_ctl.open()
                 record_log.write_log("FINGER", "OPEN", "SUCCESS")
-            else:
+            # 右親指が検出された場合、施錠する
+            elif result == 2:
+                if record_log.read_before_log()[2] == "OPEN": lock_ctl.lock()
+                record_log.write_log("FINGER", "LOCK", "SUCCESS")
+            # 指紋が登録されていない場合、施錠し、エラーを記録する
+            elif result == -1:
                 if record_log.read_before_log()[2] == "OPEN": lock_ctl.lock()
                 record_log.write_log("FINGER", "LOCK", "FINGER ERROR")
                 lock_ctl.error_led()

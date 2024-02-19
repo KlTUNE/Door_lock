@@ -22,17 +22,12 @@ def search():
         f.convertImage(0x01)
         # 検索
         result = f.searchTemplate()
-        # Index番号と一致度を取得
+        # Index番号と一致度を取得(一致しない場合は-1)
         positionNumber = result[0]
         accuracyScore = result[1]
 
-        if ( positionNumber == -1 ):
-            print('不一致')
-            return False
-        else:
-            print('一致 Index番号#' + str(positionNumber))
-            print('一致度: ' + str(accuracyScore))
-            return True
+        if ( positionNumber >= 0 ): print('#' + str(positionNumber) + '  一致度: ' + str(accuracyScore))
+        return positionNumber
 
     except Exception as e:
         print(f'エラー : {e}')
