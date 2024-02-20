@@ -21,6 +21,7 @@ HTML = """
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+    console.log(navigator.platform);
     function _open() {
         $('#message').html("");
         let password = $('#password').val();
@@ -31,6 +32,7 @@ HTML = """
         }
         let formdata = new FormData();
         formdata.append("pw", password);
+        formdata.append("os", navigator.platform);
         fetch("/open/", {
             method: "POST",
             body: formdata
@@ -51,12 +53,15 @@ HTML = """
 
     function lock() {
         $('#message').html("");
-        fetch("/lock/", {
-            method: "GET"
+        let formdata = new FormData();
+        formdata.append("os", navigator.platform);
+        fetch("/open/", {
+            method: "POST",
+            body: formdata
         }).then(response => response.json()).then(data => {
             status = data["status"];
             if (status == "ok") {
-                $('#message').html("ロックしました");
+                $('#message').html("施錠しました");
             }
             else if (status == "error"){
                 $('#message').html(data["message"]);
@@ -70,33 +75,31 @@ HTML = """
 </html>
 """
 
-# /open/ にPOSTリクエストを送ると、パスワードをチェックして開錠する
+# /open/ にPOSTリクエストを送ると、開錠・施錠する
 @app.route('/open/', methods=['POST'])
 def open():
     try:
         password = request.form.get('pw', None)
-        if password_check.check(password):
+        os = request.form.get('os', None)
+
+        result = password_check.check(password)
+        # パスワードが送られてこなかった場合、施錠する
+        if password is None:
+            if record_log.read_before_log()[2] == "OPEN": lock_ctl.lock()
+            record_log.write_log(f"{request.remote_addr}[{os}]", "LOCK", "SUCCESS")
+            return jsonify({'status': 'ok'})
+        # パスワードが正しい場合、開錠する
+        elif result:
             if record_log.read_before_log()[2] == "LOCK": lock_ctl.open()
-            record_log.write_log(request.remote_addr, "OPEN", "SUCCESS")
-        else:
-            record_log.write_log(request.remote_addr, "ERROR", "PASSWORD ERROR")
+            record_log.write_log(f"{request.remote_addr}[{os}]", "OPEN", "SUCCESS")
+            return jsonify({'status': 'ok'})
+        # パスワードが違う場合、施錠し、エラーを返す
+        elif not result:
+            record_log.write_log(f"{request.remote_addr}[{os}]", "ERROR", "PASSWORD ERROR")
             return jsonify({'status': 'error', 'message': 'パスワードが違います'})
-        return jsonify({'status': 'ok'})
 
     except Exception as e:
-        record_log.write_log(request.remote_addr, "ERROR", f"ERROR:{e}")
-        return jsonify({'status': 'error', 'message': e})
-
-# /lock/ にGETリクエストを送ると、施錠する
-@app.route('/lock/')
-def lock():
-    try:
-        if record_log.read_before_log()[2] == "OPEN": lock_ctl.lock()
-        record_log.write_log(request.remote_addr, "LOCK", "SUCCESS")
-        return jsonify({'status': 'ok'})
-
-    except Exception as e:
-        record_log.write_log(request.remote_addr, "ERROR", f"ERROR:{e}")
+        record_log.write_log(f"{request.remote_addr}[{os}]", "ERROR", f"ERROR:{e}")
         return jsonify({'status': 'error', 'message': e})
 
 # 開錠、施錠ができるWebページを表示する
