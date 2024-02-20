@@ -1,6 +1,8 @@
 import hashlib
 
 def check(password, hashed_password="ce62b07760701545d0a7efdd09b5482a272dbfbf0bd7e6c3794f1746bf03deb5"):
+    if (password == None):
+        return False
     hashed_pw = hashlib.sha256(password.encode("utf-8")).hexdigest()
     if (hashed_pw == hashed_password):
         return True

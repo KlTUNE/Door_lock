@@ -21,11 +21,9 @@ HTML = """
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-    console.log(navigator.platform);
     function _open() {
         $('#message').html("");
         let password = $('#password').val();
-        console.log(password);
         if (password == "") {
             $('#message').html("パスワードを入力してください");
             return false;
