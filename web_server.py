@@ -83,12 +83,12 @@ def open():
         result = password_check.check(password)
         # パスワードが送られてこなかった場合、施錠する
         if password is None:
-            if record_log.read_before_log()[2] == "OPEN": lock_ctl.lock()
+            if record_log.read_before_log()[2] != "LOCK": lock_ctl.lock()
             record_log.write_log(f"{request.remote_addr}[{os}]", "LOCK", "SUCCESS")
             return jsonify({'status': 'ok'})
         # パスワードが正しい場合、開錠する
         elif result:
-            if record_log.read_before_log()[2] == "LOCK": lock_ctl.open()
+            if record_log.read_before_log()[2] != "OPEN": lock_ctl.open()
             record_log.write_log(f"{request.remote_addr}[{os}]", "OPEN", "SUCCESS")
             return jsonify({'status': 'ok'})
         # パスワードが違う場合、施錠し、エラーを返す

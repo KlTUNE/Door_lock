@@ -29,25 +29,25 @@ def main():
             # 右人差し指が検出された場合、開錠する
             if result == 0 or result == 1:
                 lock_ctl.open()
-                record_log.write_log("FINGER", "OPEN", "SUCCESS")
+                record_log.write_log(f"FINGER[#{result}]", "OPEN", "SUCCESS")
             # 右親指が検出された場合、施錠する
             elif result == 2:
-                if record_log.read_before_log()[2] == "OPEN": lock_ctl.lock()
-                record_log.write_log("FINGER", "LOCK", "SUCCESS")
+                if record_log.read_before_log()[2] != "LOCK": lock_ctl.lock()
+                record_log.write_log(f"FINGER[#{result}]", "LOCK", "SUCCESS")
             # 指紋が登録されていない場合、施錠し、エラーを記録する
             elif result == -1:
-                if record_log.read_before_log()[2] == "OPEN": lock_ctl.lock()
-                record_log.write_log("FINGER", "LOCK", "FINGER ERROR")
+                if record_log.read_before_log()[2] != "LOCK": lock_ctl.lock()
+                record_log.write_log(f"FINGER[#{result}]", "ERROR", "FINGER ERROR")
                 lock_ctl.error_led()
             # 指紋認証後、タッチセンサーが押されていた場合、指が離されるまで待つ
             while GPIO.input(TOUCH_SENSOR_PIN) == 1: pass
 
         # 開錠ボタン、施錠ボタンが押されたら開錠、施錠を行う
         if GPIO.input(OPEN_PIN) == 0:
-            if record_log.read_before_log()[2] == "LOCK": lock_ctl.open()
+            if record_log.read_before_log()[2] != "OPEN": lock_ctl.open()
             record_log.write_log("BUTTON", "OPEN", "SUCCESS")
         if GPIO.input(CLOSE_PIN) == 0:
-            if record_log.read_before_log()[2] == "OPEN": lock_ctl.lock()
+            if record_log.read_before_log()[2] != "LOCK": lock_ctl.lock()
             record_log.write_log("BUTTON", "LOCK", "SUCCESS")
 
         # 自動開錠する時刻になったら開錠する
