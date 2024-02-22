@@ -66,6 +66,7 @@ if __name__ == "__main__":
         main()
     except KeyboardInterrupt:
         # Ctrl+Cが押されたらGIPを初期化して終了
+        lock_ctl.open()
         print("cleanup...")
         GPIO.cleanup()
         exit(1)
