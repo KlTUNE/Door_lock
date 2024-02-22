@@ -44,7 +44,7 @@ def main():
 
         # 開錠ボタン、施錠ボタンが押されたら開錠、施錠を行う
         if GPIO.input(OPEN_PIN) == 0:
-            if record_log.read_before_log()[2] != "OPEN": lock_ctl.open()
+            lock_ctl.open()
             record_log.write_log("BUTTON", "OPEN", "SUCCESS")
         if GPIO.input(CLOSE_PIN) == 0:
             if record_log.read_before_log()[2] != "LOCK": lock_ctl.lock()
