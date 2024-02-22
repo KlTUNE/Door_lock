@@ -19,31 +19,24 @@ servo.start(0)
 def servo_angle(angle):
     #角度からデューティ比を求める
     duty = 2.5 + (12.0 - 2.5) * (angle + 90) / 180
-    # duty = 3 + (19 / 36) * angle
-    # servo.start(0)
     servo.ChangeDutyCycle(duty)
-    time.sleep(0.3)
-    # servo.stop()
+    time.sleep(0.6)
+    servo.ChangeDutyCycle(0)
 
 # 開錠
 def open():
     print("OPEN")
     # ステータスLEDを消灯
     GPIO.output(STATUS_LED_PIN, 0)
-    servo_angle(90)
-    # servo.ChangeDutyCycle(7.25)
-    # time.sleep(0.5)
-    # servo.ChangeDutyCycle(0)
+    servo_angle(10)
 
 # 施錠
 def lock():
     print("LOCK")
     # ステータスLEDを点灯
     GPIO.output(STATUS_LED_PIN, 1)
-    servo_angle(0)
-    # servo.ChangeDutyCycle(2.5)
-    # time.sleep(0.5)
-    # servo.ChangeDutyCycle(0)
+    servo_angle(-90)
+
 
 # エラー時のLED点滅
 def error_led():
@@ -56,7 +49,9 @@ def error_led():
 
 # GPIOの初期化
 def cleanup():
+    print("CLEANUP...")
     GPIO.cleanup()
+    servo.stop()
 
 if __name__ == "__main__":
     try:
