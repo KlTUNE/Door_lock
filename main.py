@@ -20,6 +20,7 @@ def main():
     open_time = datetime.time(OPEN_TIME[0], OPEN_TIME[1], OPEN_TIME[2])
     diff_open_time = datetime.time(OPEN_TIME[0], OPEN_TIME[1], OPEN_TIME[2] + 1)
     # 最初に開錠しておく
+    lock_ctl.lock()
     lock_ctl.open()
     record_log.write_log("BOOT", "OPEN", "SUCCESS")
     while True:
