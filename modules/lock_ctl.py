@@ -57,7 +57,13 @@ def cleanup():
     GPIO.cleanup()
 
 if __name__ == "__main__":
-    open()
-    time.sleep(5)
-    lock()
-    pass
+    try:
+        OPEN_PIN = 2
+        CLOSE_PIN = 3
+        GPIO.setup(OPEN_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(CLOSE_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        while True:
+            if GPIO.input(OPEN_PIN) == 0: open()
+            if GPIO.input(CLOSE_PIN) == 0: lock()
+            time.sleep(0.1)
+    except KeyboardInterrupt: cleanup()
