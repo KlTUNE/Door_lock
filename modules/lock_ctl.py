@@ -47,6 +47,13 @@ def error_led():
         time.sleep(0.1)
     GPIO.output(STATUS_LED_PIN, 1)
 
+# ステータスLEDの点灯
+def led_on():
+    GPIO.output(STATUS_LED_PIN, 1)
+# ステータスLEDの消灯
+def led_off():
+    GPIO.output(STATUS_LED_PIN, 0)
+
 # GPIOの初期化
 def cleanup():
     print("CLEANUP...")
