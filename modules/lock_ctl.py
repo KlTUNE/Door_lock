@@ -20,7 +20,7 @@ def servo_angle(angle):
     #角度からデューティ比を求める
     duty = 2.5 + (12.0 - 2.5) * (angle + 90) / 180
     servo.ChangeDutyCycle(duty)
-    time.sleep(0.6)
+    time.sleep(1)
     servo.ChangeDutyCycle(0)
 
 # 開錠

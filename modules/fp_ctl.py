@@ -17,15 +17,11 @@ def search():
     try:
         print('指をセンサーにかざしてください...')
         count = 0
-        # while ( f.readImage() == False ):
-        #     count += 1
-        #     if count == 100:
-        #         print("指紋が読み取れませんでした")
-        #         return -1
-        if f.readImage() == False:
-            print("指紋が読み取れませんでした")
-            result = f.searchTemplate()
-            return -1
+        while ( f.readImage() == False ):
+            count += 1
+            if count == 10:
+                print("指紋が読み取れませんでした")
+                return -1
 
         # 読み取った画像を特性に変換し、charbuffer1に格納
         f.convertImage(0x01)
