@@ -20,7 +20,7 @@ def servo_angle(angle):
     #角度からデューティ比を求める
     duty = 2.5 + (12.0 - 2.5) * (angle + 90) / 180
     servo.ChangeDutyCycle(duty)
-    time.sleep(0.3)
+    time.sleep(0.5)
     servo.ChangeDutyCycle(0)
 
 # 開錠
@@ -28,14 +28,14 @@ def open():
     print("OPEN")
     # ステータスLEDを消灯
     GPIO.output(STATUS_LED_PIN, 0)
-    servo_angle(10)
+    servo_angle(20)
 
 # 施錠
 def lock():
     print("LOCK")
     # ステータスLEDを点灯
     GPIO.output(STATUS_LED_PIN, 1)
-    servo_angle(-90)
+    servo_angle(-70)
 
 
 # エラー時のLED点滅
