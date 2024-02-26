@@ -24,6 +24,7 @@ def search():
         #         return -1
         if f.readImage() == False:
             print("指紋が読み取れませんでした")
+            result = f.searchTemplate()
             return -1
 
         # 読み取った画像を特性に変換し、charbuffer1に格納
