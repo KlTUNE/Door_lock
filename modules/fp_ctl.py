@@ -1,5 +1,5 @@
 from pyfingerprint.pyfingerprint import PyFingerprint
-import lock_ctl
+from modules import lock_ctl
 import time
 
 # 指紋センサーのセットアップ&初期化
