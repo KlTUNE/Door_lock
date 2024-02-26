@@ -22,7 +22,9 @@ def search():
         #     if count == 100:
         #         print("指紋が読み取れませんでした")
         #         return -1
-        if f.readImage() == False: return -1
+        if f.readImage() == False:
+            print("指紋が読み取れませんでした")
+            return -1
 
         # 読み取った画像を特性に変換し、charbuffer1に格納
         f.convertImage(0x01)
