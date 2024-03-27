@@ -15,7 +15,7 @@ def write_log(_from, status, message):
         file_path_obj = Path(LOG_FILE)
         file_path_obj.touch()
         logs = []
-    if len(logs) > MAX_LOG_LINES: logs = logs[len(logs)+1-MAX_LOG_LINES:]
+    if len(logs) >= MAX_LOG_LINES: logs = logs[1:]
     dt_now = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
     logs.append(f"{_from} | {dt_now} | {status} | {message}\n")
     logs = ''.join(logs)
