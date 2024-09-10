@@ -1,5 +1,4 @@
 from pyfingerprint.pyfingerprint import PyFingerprint
-from modules import lock_ctl
 import time
 
 # 指紋センサーのセットアップ&初期化
@@ -19,8 +18,6 @@ def search():
         print('指をセンサーにかざしてください...')
         count = 0
         while ( f.readImage() == False ):
-            if count % 2: lock_ctl.led_off()
-            else: lock_ctl.led_on()
             if count == 10:
                 print("指紋が読み取れませんでした")
                 return -1

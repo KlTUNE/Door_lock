@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
-from modules import lock_ctl, password_check, record_log
+from modules import password_check, record_log
+import main as lock_ctl
 
 app = Flask(__name__)
 HTML = """
