@@ -85,49 +85,49 @@ def main():
     record_log.write_log("BOOT", "OPEN", "SUCCESS")
     while True:
         start = time.time()
-        while end - start < REFRESH_TIME:
+        # while end - start < REFRESH_TIME:
             # タッチセンサーが押されたら指紋認証を行う
-            if GPIO.input(TOUCH_SENSOR_PIN) == 1:
-                result = fp_ctl.search()
-                # 右人差し指が検出された場合、開錠する
-                if result == 0 or result == 1:
-                    open()
-                    record_log.write_log(f"FINGER[#{result}]", "OPEN", "SUCCESS")
-                # 右親指が検出された場合、施錠する
-                elif result == 2:
-                    if record_log.read_before_log()[2] != "LOCK": lock()
-                    record_log.write_log(f"FINGER[#{result}]", "LOCK", "SUCCESS")
-                # 指紋が登録されていない場合、施錠し、エラーを記録する
-                elif result == -1:
-                    if record_log.read_before_log()[2] != "LOCK": lock()
-                    record_log.write_log(f"FINGER[#{result}]", "ERROR", "FINGER ERROR")
-                    error_led()
-                # 指紋認証後、タッチセンサーが押されていた場合、指が離されるまで待つ
-                while GPIO.input(TOUCH_SENSOR_PIN) == 1: time.sleep(0.1)
-
-            # 開錠ボタン、施錠ボタンが押されたら開錠、施錠を行う
-            if GPIO.input(OPEN_PIN) == 0:
+        if GPIO.input(TOUCH_SENSOR_PIN) == 1:
+            result = fp_ctl.search()
+            # 右人差し指が検出された場合、開錠する
+            if result == 0 or result == 1:
                 open()
-                record_log.write_log("BUTTON", "OPEN", "SUCCESS")
-            if GPIO.input(CLOSE_PIN) == 0:
+                record_log.write_log(f"FINGER[#{result}]", "OPEN", "SUCCESS")
+            # 右親指が検出された場合、施錠する
+            elif result == 2:
                 if record_log.read_before_log()[2] != "LOCK": lock()
-                record_log.write_log("BUTTON", "LOCK", "SUCCESS")
+                record_log.write_log(f"FINGER[#{result}]", "LOCK", "SUCCESS")
+            # 指紋が登録されていない場合、施錠し、エラーを記録する
+            elif result == -1:
+                if record_log.read_before_log()[2] != "LOCK": lock()
+                record_log.write_log(f"FINGER[#{result}]", "ERROR", "FINGER ERROR")
+                error_led()
+            # 指紋認証後、タッチセンサーが押されていた場合、指が離されるまで待つ
+            while GPIO.input(TOUCH_SENSOR_PIN) == 1: time.sleep(0.1)
 
-            # 自動開錠する時刻になったら開錠する
-            dt_now = datetime.datetime.now()
-            if dt_now.time() > open_time and dt_now.time() < diff_open_time:
-                open()
-                record_log.write_log("TIME", "OPEN", "SUCCESS")
-                time.sleep(1)
+        # 開錠ボタン、施錠ボタンが押されたら開錠、施錠を行う
+        if GPIO.input(OPEN_PIN) == 0:
+            open()
+            record_log.write_log("BUTTON", "OPEN", "SUCCESS")
+        if GPIO.input(CLOSE_PIN) == 0:
+            if record_log.read_before_log()[2] != "LOCK": lock()
+            record_log.write_log("BUTTON", "LOCK", "SUCCESS")
 
-            # チャタリング防止のための待機
-            time.sleep(0.1)
-            # タイマーの更新
-            end = time.time()
+        # 自動開錠する時刻になったら開錠する
+        dt_now = datetime.datetime.now()
+        if dt_now.time() > open_time and dt_now.time() < diff_open_time:
+            open()
+            record_log.write_log("TIME", "OPEN", "SUCCESS")
+            time.sleep(1)
+
+        # チャタリング防止のための待機
+        time.sleep(0.1)
+        # タイマーの更新
+        end = time.time()
         # タッチセンサーのリフレッシュ
-        GPIO.cleanup(TOUCH_SENSOR_PIN)
-        GPIO.setup(TOUCH_SENSOR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        print("REFRESH")
+        # GPIO.cleanup(TOUCH_SENSOR_PIN)
+        # GPIO.setup(TOUCH_SENSOR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        # print("REFRESH")
 
 if __name__ == "__main__":
     try:
