@@ -17,7 +17,9 @@ def write_log(_from, status, message):
         logs = []
     if len(logs) >= MAX_LOG_LINES: logs = logs[1:]
     dt_now = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
-    logs.append(f"{_from} | {dt_now} | {status} | {message}\n")
+    log_message = f"{_from} | {dt_now} | {status} | {message}\n"
+    print(log_message)
+    logs.append(log_message)
     logs = ''.join(logs)
     with open(LOG_FILE, "w") as file:
         file.write(logs)
