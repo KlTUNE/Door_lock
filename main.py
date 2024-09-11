@@ -1,6 +1,6 @@
 from modules import fp_ctl, record_log
 import RPi.GPIO as GPIO
-import time, datetime, requests, json
+import time, datetime
 
 # 開錠ボタンの入力ピン番号
 OPEN_PIN = 2
@@ -23,12 +23,6 @@ GPIO.setup(STATUS_LED_PIN, GPIO.OUT)
 # サーボのPWMの設定
 servo = GPIO.PWM(SERVO_PIN, 50)
 servo.start(0)
-
-# タイマーの設定
-start = time.time()
-end = time.time()
-# TOUCH_SENSOR_PINリフレッシュ時間(s)
-REFRESH_TIME = 60
 
 #角度からデューティ比を求め、サーボを動かす
 def servo_angle(angle):
@@ -80,6 +74,11 @@ def main():
     OPEN_TIME = [2, 0, 0]
     open_time = datetime.time(OPEN_TIME[0], OPEN_TIME[1], OPEN_TIME[2])
     diff_open_time = datetime.time(OPEN_TIME[0], OPEN_TIME[1], OPEN_TIME[2] + 1)
+    # タイマーの設定
+    start = time.time()
+    end = time.time()
+    # TOUCH_SENSOR_PINリフレッシュ時間(s)
+    REFRESH_TIME = 60
     # 最初に開錠しておく
     lock()
     open()
