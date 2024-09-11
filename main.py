@@ -87,8 +87,9 @@ def main():
         start = time.time()
         # while end - start < REFRESH_TIME:
             # タッチセンサーが押されたら指紋認証を行う
-        if GPIO.input(TOUCH_SENSOR_PIN) == 1:
-            result = fp_ctl.search()
+        # if GPIO.input(TOUCH_SENSOR_PIN) == 1:
+        result = fp_ctl.search()
+        if result != -1:
             # 右人差し指が検出された場合、開錠する
             if result == 0 or result == 1:
                 open()
