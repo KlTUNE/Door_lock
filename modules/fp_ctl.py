@@ -17,7 +17,7 @@ def init_fp_module():
 
 ### 指紋を検索
 def search(f):
-    # try:
+    try:
         if f.readImage() == False: return 999
 
         # 読み取った画像を特性に変換し、charbuffer1に格納
@@ -31,9 +31,9 @@ def search(f):
         if ( positionNumber >= 0 ): print('#' + str(positionNumber) + '  一致度: ' + str(accuracyScore))
         return positionNumber
 
-    # except Exception as e:
-    #     print(f'エラー : {e}')
-    #     return -1
+    except Exception as e:
+        print(f'エラー : {e}')
+        return -1
 
 ### 登録済みのindexを表示
 def index(f):
