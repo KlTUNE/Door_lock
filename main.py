@@ -80,7 +80,8 @@ def main():
     record_log.write_log("BOOT", "OPEN", "SUCCESS")
     while True:
         result = fp_ctl.search(fp_module)
-        if result == 999:
+        if result != 999:
+            print("kennti")
             # 右人差し指が検出された場合、開錠する
             if result == 0 or result == 1:
                 open()
@@ -95,8 +96,12 @@ def main():
                 record_log.write_log(f"FINGER[#{result}]", "ERROR", "FINGER ERROR")
                 error_led()
 
+
             # 指紋認証モジュールから手が離されるまで待機
-            while fp_ctl.search(fp_module) != 999: pass
+            while fp_ctl.search(fp_module) != 999:
+                print("指を離してください")
+                pass
+            print("離されました")
 
         # 開錠ボタン、施錠ボタンが押されたら開錠、施錠を行う
         if GPIO.input(OPEN_PIN) == 0:
