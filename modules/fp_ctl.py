@@ -2,18 +2,21 @@ from pyfingerprint.pyfingerprint import PyFingerprint
 import time
 
 # 指紋センサーのセットアップ&初期化
-try:
-    MODULE_PATH = '/dev/serial0'
-    f = PyFingerprint(MODULE_PATH, 57600, 0xFFFFFFFF, 0x00000000)
-    if ( f.verifyPassword() == False ): raise ValueError('指定された指紋センサーのパスワードが間違っています')
-    print('センサー情報 : ' + str(f.getTemplateCount()) +'/'+ str(f.getStorageCapacity()))
+def init_fp_module():
+    try:
+        MODULE_PATH = '/dev/serial0'
+        f = PyFingerprint(MODULE_PATH, 57600, 0xFFFFFFFF, 0x00000000)
+        if ( f.verifyPassword() == False ): raise ValueError('指定された指紋センサーのパスワードが間違っています')
+        print('センサー情報 : ' + str(f.getTemplateCount()) +'/'+ str(f.getStorageCapacity()))
 
-except Exception as e:
-    print(f'指紋センサーを初期化できませんでした : {e}')
-    exit(1)
+        return f
+
+    except Exception as e:
+        print(f'指紋センサーを初期化できませんでした : {e}')
+        return -1
 
 ### 指紋を検索
-def search():
+def search(f):
     try:
         if f.readImage() == False: return 999
 
@@ -33,7 +36,7 @@ def search():
         return -1
 
 ### 登録済みのindexを表示
-def index():
+def index(f):
     try:
         tableIndex = f.getTemplateIndex(0)
         TrueIndex = []
@@ -48,7 +51,7 @@ def index():
         return []
 
 ### 指紋を削除
-def delete():
+def delete(f):
     try:
         positionNumber = input('削除するIndex番号を入力してください: ')
         positionNumber = int(positionNumber)
@@ -64,7 +67,7 @@ def delete():
         return False
 
 ### 指紋を登録
-def enroll():
+def enroll(f):
     try:
         ## 指紋を検索
         positionNumber = search()
@@ -96,8 +99,9 @@ def enroll():
         return False
 
 if __name__ == "__main__":
-    enroll()
-    # index()
-    # search()
-    delete()
+    f = init_fp_module()
+    enroll(f)
+    # index(f)
+    # search(f)
+    delete(f)
     pass
