@@ -32,6 +32,7 @@ def search(f):
         return positionNumber
 
     except Exception as e:
+        if "0x17" in str(e): return 999
         print(f'エラー : {e}')
         return -1
 

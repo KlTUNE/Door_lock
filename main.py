@@ -81,7 +81,7 @@ def main():
     while True:
         result = fp_ctl.search(fp_module)
         if result != 999:
-            print("kennti")
+            print("指紋が検出されました")
             # 右人差し指が検出された場合、開錠する
             if result == 0 or result == 1:
                 open()
