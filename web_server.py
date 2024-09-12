@@ -101,6 +101,16 @@ def open():
         record_log.write_log(f"{request.remote_addr}[{os}]", "ERROR", f"ERROR:{e}")
         return jsonify({'status': 'error', 'message': e})
 
+# /status/ にGETリクエストを送ると、開錠・施錠の状態を返す
+@app.route('/status/', methods=['GET'])
+def status():
+    try:
+        last_log = record_log.read_before_log()
+        return jsonify({'status': str(last_log[2])})
+
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': e})
+
 # 開錠、施錠ができるWebページを表示する
 @app.route('/')
 def index():
