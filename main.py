@@ -1,6 +1,7 @@
 from modules import fp_ctl, record_log
 import RPi.GPIO as GPIO
 import time, datetime
+import pigpio
 
 # 開錠ボタンの入力ピン番号
 OPEN_PIN = 2
@@ -12,25 +13,30 @@ TOUCH_SENSOR_PIN = 4
 SERVO_PIN = 18
 # ステータスLEDの出力ピン番号
 STATUS_LED_PIN = 17
+
 # GPIOの設定
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 GPIO.setup(OPEN_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(CLOSE_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(TOUCH_SENSOR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(SERVO_PIN, GPIO.OUT)
 GPIO.setup(STATUS_LED_PIN, GPIO.OUT)
+# GPIO.setup(SERVO_PIN, GPIO.OUT)
+pigpio.pi().set_mode(SERVO_PIN, pigpio.OUTPUT)
+
 # サーボのPWMの設定
-servo = GPIO.PWM(SERVO_PIN, 50)
-servo.start(0)
+# servo = GPIO.PWM(SERVO_PIN, 50)
+# servo.start(0)
 
 #角度からデューティ比を求め、サーボを動かす
 def servo_angle(angle):
     #角度からデューティ比を求める
     duty = 2.5 + (12.0 - 2.5) * (angle + 90) / 180
-    servo.ChangeDutyCycle(duty)
+    # servo.ChangeDutyCycle(duty)
+    pigpio.pi().hardware_PWM(SERVO_PIN, 50, duty*1000000)
     time.sleep(0.5)
-    servo.ChangeDutyCycle(0)
+    # servo.ChangeDutyCycle(0)
+    # pigpio.pi().hardware_PWM(SERVO_PIN, 50, 0)
 
 # 開錠
 def open():
@@ -65,7 +71,7 @@ def led_off():
 def cleanup():
     print("CLEANUP...")
     GPIO.cleanup()
-    servo.stop()
+    # servo.stop()
 
 def main():
     # 自動開錠する時刻の設定
